@@ -1,0 +1,36 @@
+const input = await Deno.readTextFile('./input.txt');
+const lines = input.split('\n');
+lines.pop();
+const reindeers = lines.map((line)=>{
+    const words = line.split(' ');
+    const name = words[0];
+    const speed = parseInt(words[3]);
+    const timeAtSpeed = parseInt(words[6]);
+    const restTime = parseInt(words[13]);
+    return {
+        name,
+        speed,
+        timeAtSpeed,
+        restTime
+    };
+});
+const min = (num1, num2)=>num1 < num2 ? num1 : num2;
+function reindeersAt(reindeers, time) {
+    return reindeers.map(({ name , speed , timeAtSpeed , restTime  })=>{
+        const completeCicleTime = timeAtSpeed + restTime;
+        const completedCicles = Math.floor(time / completeCicleTime);
+        const completeCiclesKms = completedCicles * speed * timeAtSpeed;
+        const remainingSeconds = time % completeCicleTime;
+        const incompleCicleKms = min(remainingSeconds, timeAtSpeed) * speed;
+        return completeCiclesKms + incompleCicleKms;
+    });
+}
+const seconds = 2503;
+const kms = reindeersAt(reindeers, seconds);
+console.log(kms);
+let maxKms = 0;
+kms.forEach((distance)=>{
+    if (distance > maxKms) maxKms = distance;
+});
+console.log(maxKms);
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZpbGU6Ly8vaG9tZS9tYXRpYXNjcmEvRG9jdW1lbnRzL0Rlc2Fycm9sbG8vYWR2ZW50LzIwMTUvZGF5MTQvYS50cyJdLCJzb3VyY2VzQ29udGVudCI6WyJjb25zdCBpbnB1dCA9IGF3YWl0IERlbm8ucmVhZFRleHRGaWxlKCcuL2lucHV0LnR4dCcpXG5cbmludGVyZmFjZSBSZWluZGVlciB7XG4gIG5hbWU6IHN0cmluZ1xuICBzcGVlZDogbnVtYmVyXG4gIHRpbWVBdFNwZWVkOiBudW1iZXJcbiAgcmVzdFRpbWU6IG51bWJlclxufVxuXG5jb25zdCBsaW5lcyA9IGlucHV0LnNwbGl0KCdcXG4nKVxubGluZXMucG9wKClcblxuY29uc3QgcmVpbmRlZXJzOiBSZWluZGVlcltdID0gbGluZXMubWFwKChsaW5lKSA9PiB7XG4gIGNvbnN0IHdvcmRzID0gbGluZS5zcGxpdCgnICcpXG4gIGNvbnN0IG5hbWUgPSB3b3Jkc1swXVxuICBjb25zdCBzcGVlZCA9IHBhcnNlSW50KHdvcmRzWzNdKVxuICBjb25zdCB0aW1lQXRTcGVlZCA9IHBhcnNlSW50KHdvcmRzWzZdKVxuICBjb25zdCByZXN0VGltZSA9IHBhcnNlSW50KHdvcmRzWzEzXSlcbiAgcmV0dXJuIHsgbmFtZSwgc3BlZWQsIHRpbWVBdFNwZWVkLCByZXN0VGltZSB9XG59KVxuXG5jb25zdCBtaW4gPSAobnVtMTogbnVtYmVyLCBudW0yOiBudW1iZXIpOiBudW1iZXIgPT4gbnVtMSA8IG51bTIgPyBudW0xIDogbnVtMlxuXG5mdW5jdGlvbiByZWluZGVlcnNBdChyZWluZGVlcnM6IFJlaW5kZWVyW10sIHRpbWU6IG51bWJlcik6IG51bWJlcltdIHtcbiAgcmV0dXJuIHJlaW5kZWVycy5tYXAoKHsgbmFtZSwgc3BlZWQsIHRpbWVBdFNwZWVkLCByZXN0VGltZSB9KSA9PiB7XG4gICAgY29uc3QgY29tcGxldGVDaWNsZVRpbWUgPSB0aW1lQXRTcGVlZCArIHJlc3RUaW1lXG5cbiAgICBjb25zdCBjb21wbGV0ZWRDaWNsZXMgPSBNYXRoLmZsb29yKHRpbWUgLyBjb21wbGV0ZUNpY2xlVGltZSlcbiAgICBjb25zdCBjb21wbGV0ZUNpY2xlc0ttcyA9IGNvbXBsZXRlZENpY2xlcyAqIHNwZWVkICogdGltZUF0U3BlZWRcblxuICAgIGNvbnN0IHJlbWFpbmluZ1NlY29uZHMgPSB0aW1lICUgY29tcGxldGVDaWNsZVRpbWVcbiAgICBjb25zdCBpbmNvbXBsZUNpY2xlS21zID0gbWluKHJlbWFpbmluZ1NlY29uZHMsIHRpbWVBdFNwZWVkKSAqIHNwZWVkXG4gICAgcmV0dXJuIGNvbXBsZXRlQ2ljbGVzS21zICsgaW5jb21wbGVDaWNsZUttc1xuICB9KVxufVxuXG5jb25zdCBzZWNvbmRzID0gMjUwM1xuY29uc3Qga21zID0gcmVpbmRlZXJzQXQocmVpbmRlZXJzLCBzZWNvbmRzKVxuY29uc29sZS5sb2coa21zKVxubGV0IG1heEttcyA9IDBcbmttcy5mb3JFYWNoKChkaXN0YW5jZSkgPT4ge1xuICBpZiAoZGlzdGFuY2UgPiBtYXhLbXMpXG4gICAgbWF4S21zID0gZGlzdGFuY2Vcbn0pXG5jb25zb2xlLmxvZyhtYXhLbXMpXG4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsTUFBTSxRQUFRLE1BQU0sS0FBSyxZQUFZLENBQUM7QUFTdEMsTUFBTSxRQUFRLE1BQU0sS0FBSyxDQUFDO0FBQzFCLE1BQU0sR0FBRztBQUVULE1BQU0sWUFBd0IsTUFBTSxHQUFHLENBQUMsQ0FBQyxPQUFTO0lBQ2hELE1BQU0sUUFBUSxLQUFLLEtBQUssQ0FBQztJQUN6QixNQUFNLE9BQU8sS0FBSyxDQUFDLEVBQUU7SUFDckIsTUFBTSxRQUFRLFNBQVMsS0FBSyxDQUFDLEVBQUU7SUFDL0IsTUFBTSxjQUFjLFNBQVMsS0FBSyxDQUFDLEVBQUU7SUFDckMsTUFBTSxXQUFXLFNBQVMsS0FBSyxDQUFDLEdBQUc7SUFDbkMsT0FBTztRQUFFO1FBQU07UUFBTztRQUFhO0lBQVM7QUFDOUM7QUFFQSxNQUFNLE1BQU0sQ0FBQyxNQUFjLE9BQXlCLE9BQU8sT0FBTyxPQUFPLElBQUk7QUFFN0UsU0FBUyxZQUFZLFNBQXFCLEVBQUUsSUFBWSxFQUFZO0lBQ2xFLE9BQU8sVUFBVSxHQUFHLENBQUMsQ0FBQyxFQUFFLEtBQUksRUFBRSxNQUFLLEVBQUUsWUFBVyxFQUFFLFNBQVEsRUFBRSxHQUFLO1FBQy9ELE1BQU0sb0JBQW9CLGNBQWM7UUFFeEMsTUFBTSxrQkFBa0IsS0FBSyxLQUFLLENBQUMsT0FBTztRQUMxQyxNQUFNLG9CQUFvQixrQkFBa0IsUUFBUTtRQUVwRCxNQUFNLG1CQUFtQixPQUFPO1FBQ2hDLE1BQU0sbUJBQW1CLElBQUksa0JBQWtCLGVBQWU7UUFDOUQsT0FBTyxvQkFBb0I7SUFDN0I7QUFDRjtBQUVBLE1BQU0sVUFBVTtBQUNoQixNQUFNLE1BQU0sWUFBWSxXQUFXO0FBQ25DLFFBQVEsR0FBRyxDQUFDO0FBQ1osSUFBSSxTQUFTO0FBQ2IsSUFBSSxPQUFPLENBQUMsQ0FBQyxXQUFhO0lBQ3hCLElBQUksV0FBVyxRQUNiLFNBQVM7QUFDYjtBQUNBLFFBQVEsR0FBRyxDQUFDIn0=

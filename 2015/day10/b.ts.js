@@ -1,0 +1,22 @@
+const input = "3113322113";
+const times = 50;
+let result = "";
+let prevInput = input;
+for(let k = 0; k < times; ++k){
+    result = "";
+    const text = prevInput;
+    let i = 0;
+    while(i < text.length){
+        let j = 0;
+        const char = text[i];
+        while(i < text.length - 1 && char === text[i + 1 + j]){
+            ++j;
+        }
+        i += 1 + j;
+        result += (j + 1).toString() + char;
+    }
+    prevInput = result;
+}
+// console.log(result)
+console.log(result.length);
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZpbGU6Ly8vaG9tZS9tYXRpYXNjcmEvRG9jdW1lbnRzL0Rlc2Fycm9sbG8vYWR2ZW50LzIwMTUvZGF5MTAvYi50cyJdLCJzb3VyY2VzQ29udGVudCI6WyJjb25zdCBpbnB1dCA9IFwiMzExMzMyMjExM1wiXG5jb25zdCB0aW1lcyA9IDUwXG5cbmxldCByZXN1bHQgPSBcIlwiXG5sZXQgcHJldklucHV0ID0gaW5wdXRcbmZvcihsZXQgayA9IDA7IGsgPCB0aW1lczsgKytrKSB7XG4gIHJlc3VsdCA9IFwiXCJcbiAgY29uc3QgdGV4dCA9IHByZXZJbnB1dFxuXG4gIGxldCBpID0gMFxuICB3aGlsZShpIDwgdGV4dC5sZW5ndGgpIHtcbiAgICBsZXQgaiA9IDBcbiAgICBjb25zdCBjaGFyID0gdGV4dFtpXVxuICAgIHdoaWxlIChpIDwgdGV4dC5sZW5ndGggLSAxICYmIGNoYXIgPT09IHRleHRbaSArIDEgKyBqXSkge1xuICAgICAgKytqXG4gICAgfSBcbiAgICBpICs9IDEgKyBqXG4gICAgcmVzdWx0ICs9IChqICsgMSkudG9TdHJpbmcoKSArIGNoYXJcbiAgfVxuICBwcmV2SW5wdXQgPSByZXN1bHRcbn1cblxuLy8gY29uc29sZS5sb2cocmVzdWx0KVxuY29uc29sZS5sb2cocmVzdWx0Lmxlbmd0aClcbiJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxNQUFNLFFBQVE7QUFDZCxNQUFNLFFBQVE7QUFFZCxJQUFJLFNBQVM7QUFDYixJQUFJLFlBQVk7QUFDaEIsSUFBSSxJQUFJLElBQUksR0FBRyxJQUFJLE9BQU8sRUFBRSxFQUFHO0lBQzdCLFNBQVM7SUFDVCxNQUFNLE9BQU87SUFFYixJQUFJLElBQUk7SUFDUixNQUFNLElBQUksS0FBSyxNQUFNLENBQUU7UUFDckIsSUFBSSxJQUFJO1FBQ1IsTUFBTSxPQUFPLElBQUksQ0FBQyxFQUFFO1FBQ3BCLE1BQU8sSUFBSSxLQUFLLE1BQU0sR0FBRyxLQUFLLFNBQVMsSUFBSSxDQUFDLElBQUksSUFBSSxFQUFFLENBQUU7WUFDdEQsRUFBRTtRQUNKO1FBQ0EsS0FBSyxJQUFJO1FBQ1QsVUFBVSxDQUFDLElBQUksQ0FBQyxFQUFFLFFBQVEsS0FBSztJQUNqQztJQUNBLFlBQVk7QUFDZDtBQUVBLHNCQUFzQjtBQUN0QixRQUFRLEdBQUcsQ0FBQyxPQUFPLE1BQU0ifQ==
