@@ -1,0 +1,10 @@
+# Rustfmt configuration to minimize vertical whitespace
+
+# Ensure single newline at end of file
+newline_style = "Unix"
+
+# Other useful formatting settings
+hard_tabs = false
+tab_spaces = 4
+max_width = 100
+use_small_heuristics = "Default"
