@@ -7,4 +7,4 @@ fi
 
 DAY=$1
 cd "$(dirname "$0")"
-cargo test --lib day$DAY::tests
+cargo test --lib day$DAY::tests -- --nocapture

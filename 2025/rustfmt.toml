@@ -1,7 +1,10 @@
-# Rustfmt configuration to minimize vertical whitespace
+# Rustfmt configuration
 
 # Ensure single newline at end of file
 newline_style = "Unix"
+
+# Add empty lines between functions
+fn_single_line = false
 
 # Other useful formatting settings
 hard_tabs = false
