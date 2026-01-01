@@ -34,7 +34,6 @@ fn bank_max_joltage(bank: &Vec<u32>, batteries: u32) -> u64 {
         curr -= 1;
         chosen.push(*battery);
     }
-
     return chosen
         .iter()
         .map(|c| c.to_string())
