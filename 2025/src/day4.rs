@@ -1,6 +1,5 @@
-use std::collections::HashMap;
-
-use itertools::{iproduct, Itertools};
+use itertools::iproduct;
+use std::collections::{HashMap, HashSet};
 
 #[derive(Debug, PartialEq, Eq)]
 enum MapItem {
@@ -8,24 +7,22 @@ enum MapItem {
     Space,
 }
 
-fn adj(x: usize, y: usize, map: &Vec<Vec<MapItem>>) -> Vec<(usize, usize)> {
+fn adj(x: usize, y: usize, map: &Vec<Vec<MapItem>>) -> HashSet<(usize, usize)> {
     let max_x = map[0].len();
     let max_y = map.len();
-
     let xs = (x.saturating_sub(1))..=usize::min(x + 1, max_x - 1);
     let ys = (y.saturating_sub(1))..=usize::min(y + 1, max_y - 1);
-
     iproduct!(xs, ys)
         .filter(|&(nx, ny)| !(nx == x && ny == y))
         .collect()
 }
 
-fn adj_paper_rolls(map: &Vec<Vec<MapItem>>) -> HashMap<(usize, usize), Vec<(usize, usize)>> {
-    let mut adjs: HashMap<(usize, usize), Vec<(usize, usize)>> = HashMap::new();
+fn adj_paper_rolls(map: &Vec<Vec<MapItem>>) -> HashMap<(usize, usize), HashSet<(usize, usize)>> {
+    let mut adjs: HashMap<(usize, usize), HashSet<(usize, usize)>> = HashMap::new();
     for (y, row) in map.iter().enumerate() {
         for (x, item) in row.iter().enumerate() {
             if *item == MapItem::Paper {
-                let adjacent_rolls: Vec<(usize, usize)> = adj(x, y, map)
+                let adjacent_rolls: HashSet<(usize, usize)> = adj(x, y, map)
                     .iter()
                     .filter(|(ax, ay)| map[*ay][*ax] == MapItem::Paper)
                     .map(|(ax, ay)| (*ax, *ay))
@@ -38,7 +35,7 @@ fn adj_paper_rolls(map: &Vec<Vec<MapItem>>) -> HashMap<(usize, usize), Vec<(usiz
     return adjs;
 }
 
-fn accessible_from(adjs: &HashMap<(usize, usize), Vec<(usize, usize)>>) -> Vec<(usize, usize)> {
+fn accessible_from(adjs: &HashMap<(usize, usize), HashSet<(usize, usize)>>) -> Vec<(usize, usize)> {
     return adjs
         .iter()
         .filter(|(_, adj_rolls)| adj_rolls.len() < 4)
@@ -71,18 +68,15 @@ fn removable_rolls_count(map: &Vec<Vec<MapItem>>) -> usize {
     let mut count = 0;
     let mut accessible = accessible_from(&adjs);
     while accessible.len() > 0 {
-        for (x, y) in accessible.iter() {
-            for v in adjs.values_mut() {
-                if let Some((i, _)) = v.iter().find_position(|(ax, ay)| (*ax, *ay) == (*x, *y)) {
-                    v.remove(i);
-                }
+        for &(x, y) in accessible.iter() {
+            for (ax, ay) in adjs.get(&(x, y)).unwrap().clone() {
+                adjs.get_mut(&(ax, ay)).unwrap().remove(&(x, y));
             }
-            adjs.remove_entry(&(*x, *y));
+            adjs.remove_entry(&(x, y));
         }
         count += accessible.len();
         accessible = accessible_from(&adjs);
     }
-
     return count;
 }
 
@@ -101,6 +95,7 @@ pub fn part2(input: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
     #[test]
     fn test_part1() {
         let input = "..@@.@@@@.
