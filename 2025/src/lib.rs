@@ -14,6 +14,21 @@ pub mod day9;
 #[macro_export]
 macro_rules! solve {
     ($day:ident) => {
+        $crate::solve!($day, 1, 2);
+    };
+    ($day:ident, 1) => {
+        use advent2025::$day;
+        use std::env;
+        use std::fs;
+
+        fn main() {
+            let day_num = stringify!($day).replace("day", "");
+            let input =
+                fs::read_to_string(format!("inputs/day{}.txt", day_num)).unwrap_or_default();
+            println!("Part 1: {}", $day::part1(&input));
+        }
+    };
+    ($day:ident, 1, 2) => {
         use advent2025::$day;
         use std::env;
         use std::fs;
