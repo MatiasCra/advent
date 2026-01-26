@@ -1,1 +1,1 @@
-advent2025::solve!(day12);
+advent2025::solve!(day12, 1);
